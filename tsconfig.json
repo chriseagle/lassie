@@ -16,5 +16,6 @@
     "module": "NodeNext",
     "outDir": "dist",
     "sourceMap": true,
-  }
+  },
+  "include": ["src/**/*.ts"],
 }
