@@ -1,18 +1,18 @@
 const Lassie = async <TExpectedResult>(
   url: string,
   options: RequestInit,
-  assertationTest: (data: unknown) => data is TExpectedResult // Use a type predicate here
+  assertationTest: (data: unknown) => data is TExpectedResult
 ): Promise<TExpectedResult> => {
   const response = await fetch(url, {
     ...options
   });
 
-  // Ensure the response is ok before proceeding
+
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
 
-  // Assuming JSON response, handle other response types as needed
+  // @TODO add for json/text/blob? support
   const data = await response.json();
 
   // Use the assertion test to validate the data
