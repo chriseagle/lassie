@@ -1,21 +1,34 @@
-const Lassie = async <TExpectedResult>(
-  url: string,
-  options: RequestInit,
-  assertationTest: (data: unknown) => data is TExpectedResult
-): Promise<TExpectedResult> => {
-  const response = await fetch(url, {
-    ...options
-  });
+interface LassieOpts {
+  responseType?: "json" | "text" | "blob";
+}
 
+const Lassie = async <TExpectedResponse>(
+  url: string | URL | globalThis.Request,
+  ReqOpts: RequestInit,
+  assertationTest: (data: unknown) => data is TExpectedResponse,
+  LassieOpts: LassieOpts = { responseType: "json" }
+): Promise<TExpectedResponse> => {
+  const response = await fetch(url, ReqOpts);
 
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
 
-  // @TODO add for json/text/blob? support
-  const data = await response.json();
+  let data: unknown;
+  switch (LassieOpts.responseType) {
+    case "json":
+      data = await response.json();
+      break;
+    case "text":
+      data = await response.text();
+      break;
+    case "blob":
+      data = await response.blob();
+      break;
+    default:
+      throw new Error(`Unsupported returnType: ${LassieOpts.responseType}`);
+  }
 
-  // Use the assertion test to validate the data
   if (!assertationTest(data)) {
     throw new Error("Data validation failed");
   }

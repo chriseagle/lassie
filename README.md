@@ -1,6 +1,6 @@
 # Lassie
 
-A Generic supporting Fetch wrapper with built-in assertion support with valibot.
+A type-safe, generic Fetch library with built-in assertion support with valibot.
 
 ## TODO
 
