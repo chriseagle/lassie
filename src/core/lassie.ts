@@ -1,14 +1,7 @@
-import type { LassieOpts } from "../types/index.js";
-
-const lassieOptsDefaults: LassieOpts = {
-  responseType: "json",
-};
-
 const Lassie = async <TExpectedResponse>(
   url: string | URL | globalThis.Request,
   assertion: (data: unknown) => data is TExpectedResponse,
-  ReqOpts?: RequestInit,
-  LassieOpts?: LassieOpts
+  ReqOpts?: RequestInit
 ): Promise<TExpectedResponse> => {
   const response = await fetch(url, { ...ReqOpts });
 
@@ -16,23 +9,19 @@ const Lassie = async <TExpectedResponse>(
     throw new Error(`HTTP error! status: ${response.status}`);
   }
 
-  const LassieOptsFinal = { ...lassieOptsDefaults, ...LassieOpts };
+  let data: unknown = null;
+  const contentType =
+    response.headers.get("content-Type") ?? "application/json";
 
-  let data: unknown;
-  switch (LassieOptsFinal.responseType) {
-    case "json":
-      data = await response.json();
-      break;
-    case "text":
-      data = await response.text();
-      break;
-    case "blob":
-      data = await response.blob();
-      break;
-    default:
-      throw new Error(
-        `Unsupported returnType: ${LassieOptsFinal.responseType}`
-      );
+  if (contentType.includes("text/")) {
+    data = await response.text();
+  }
+  if (contentType.includes("application/json")) {
+    data = await response.json();
+  }
+
+  if (data === null) {
+    throw new Error("No data received");
   }
 
   if (!assertion(data)) {
