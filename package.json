@@ -1,0 +1,23 @@
+{
+  "name": "lassie",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev:tsx": "tsc --watch --preserveWatchOutput",
+    "dev:node": "node --enable-source-maps --watch dist/index.js",
+    "dev": "npm run \"/dev:/\""
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "valibot": "^1.0.0-beta.11"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.6",
+    "typescript": "^5.7.3"
+  }
+}
