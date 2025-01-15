@@ -20,7 +20,7 @@ interface HogwartsStudent {
     length: number;
   };
   patronus: string;
-  hogwartsStudent: boolean;
+  hogwartsStudent: true;
   hogWartsStaff: boolean;
   actor: string;
   alternate_actors: string[];

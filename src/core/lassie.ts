@@ -15,17 +15,20 @@ const Lassie = async <TExpectedResponse>(
 
   if (contentType.includes("text/")) {
     data = await response.text();
-  }
-  if (contentType.includes("application/json")) {
+  } else if (contentType.includes("application/json")) {
     data = await response.json();
+  } else {
+    throw new Error(`Unsupported content type: ${contentType}`);
   }
 
-  if (data === null) {
+  if (data === null || data === undefined) {
     throw new Error("No data received");
   }
 
   if (!assertion(data)) {
-    throw new Error("Data validation failed");
+    throw new Error(
+      `Data validation failed. Received data: ${JSON.stringify(data)}`
+    );
   }
 
   return data;

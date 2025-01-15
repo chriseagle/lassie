@@ -4,7 +4,9 @@ A fetch wrapper that leverages [Valibot](https://valibot.dev/) to validate the r
 
 ## Reasoning
 
-Validation of data from trusted sources can still be required. Type assertions using the "as" operator are not sufficient for this purpose. Lassie aims to provide first-class type predicate based validation for fetch responses. This light-weight performance oriented approach is not as strict as complete object parsing and validation, however it can still provide a high level of confidence in the data received from a remote source.
+Validation of data from trusted sources can still be required. Type assertions using the "as" operator are not sufficient for this purpose. Lassie aims to provide first-class type predicate based validation for fetch responses. 
+
+This light-weight, performance oriented approach is not as strict as complete object parsing and validation, however it still provides a high level of confidence in the data received from a remote source.
 
 ### Usage
 
