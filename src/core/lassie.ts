@@ -1,6 +1,6 @@
 const Lassie = async <TExpectedResponse>(
   url: string | URL | globalThis.Request,
-  assertion: (data: unknown) => data is TExpectedResponse,
+  predicateFn: (data: unknown) => data is TExpectedResponse,
   ReqOpts?: RequestInit
 ): Promise<TExpectedResponse> => {
   const response = await fetch(url, { ...ReqOpts });
@@ -25,7 +25,7 @@ const Lassie = async <TExpectedResponse>(
     throw new Error("No data received");
   }
 
-  if (!assertion(data)) {
+  if (!predicateFn(data)) {
     throw new Error(
       `Data validation failed. Received data: ${JSON.stringify(data)}`
     );
