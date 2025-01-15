@@ -1,4 +1,4 @@
-import Lassie from "../src/core/lassie.js"; // Adjust the path based on your project structure
+import Lassie from "../src/core/lassie.js";
 import * as v from "valibot";
 
 interface HogwartsStudent {
@@ -28,9 +28,7 @@ interface HogwartsStudent {
   image: string;
 }
 
-const isHogwartsStudent = <HogwartsStudent>(
-  data: unknown
-): data is HogwartsStudent => {
+const isHogwartsStudent = (data: unknown): data is HogwartsStudent[] => {
   const schema = v.array(
     v.object({
       hogwartsStudent: v.pipe(v.boolean(), v.literal(true)),
@@ -41,7 +39,7 @@ const isHogwartsStudent = <HogwartsStudent>(
 
 async function example() {
   try {
-    const data = await Lassie<HogwartsStudent>(
+    const data = await Lassie<HogwartsStudent[]>(
       "https://hp-api.onrender.com/api/character/9e3f7ce4-b9a7-4244-b709-dae5c1f1d4a8",
       isHogwartsStudent
     );
