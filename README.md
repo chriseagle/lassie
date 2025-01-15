@@ -1,9 +1,3 @@
 # Lassie
 
-A type-safe, generic Fetch library with built-in assertion support with valibot.
-
-## TODO
-
-* Add logical valibot defaults to extend from
-* Update readme with examples
-* Publish to NPM
+A fetch wrapper that leverages [Valibot](https://valibot.dev/) to validate the response using type predicates.
